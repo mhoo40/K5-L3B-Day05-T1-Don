@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prototype T1 Y tế · Đọc ảnh thuốc ở ba mức tự chủ</title>
+<style>
+:root{--ink:#16231f;--mut:#5d6b66;--line:#cfdad4;--bg:#eef3f0;--teal:#0f6b5c;--tealb:#dcefe9;--amb:#8a5a00;--ambb:#fdf0cf;--red:#b3261e;--redb:#fbe4e1;--blue:#1f4e8c;--blueb:#e1ebf7}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Be Vietnam Pro","Noto Sans","Segoe UI",Arial,sans-serif;color:var(--ink);background:var(--bg);font-size:15px;line-height:1.5}
+header{padding:16px 24px 12px;background:#fff;border-bottom:1px solid var(--line)}
+h1{font-size:19px;margin:0 0 4px}
+.sub{color:var(--mut);font-size:13.5px;max-width:900px}
+.ctl{display:flex;gap:18px;flex-wrap:wrap;margin-top:10px;align-items:center}
+.grp{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.grp>span{font-size:13px;color:var(--mut)}
+.grp button{border:1.5px solid var(--line);background:#fff;border-radius:8px;padding:6px 12px;font:inherit;font-size:13.5px;cursor:pointer}
+.grp button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+button:focus-visible,input:focus-visible{outline:3px solid #f0a500;outline-offset:2px}
+main{display:grid;grid-template-columns:390px 1fr;gap:22px;padding:18px 24px 28px;max-width:1240px}
+@media(max-width:860px){main{grid-template-columns:1fr}}
+.phone{background:#fff;border:1px solid var(--line);border-radius:22px;padding:12px;align-self:start}
+.bar{display:flex;justify-content:space-between;font-size:12px;color:var(--mut);padding:0 4px 8px;border-bottom:1px solid var(--line)}
+.chat{display:flex;flex-direction:column;gap:10px;padding:10px 2px;min-height:440px}
+.me{align-self:flex-end;background:var(--blue);color:#fff;padding:9px 12px;border-radius:14px 14px 2px 14px;max-width:88%}
+.ai{align-self:flex-start;background:#f0f4f2;padding:10px 12px;border-radius:14px 14px 14px 2px;max-width:96%}
+.who{font-size:12px;color:var(--mut);margin-bottom:3px;font-weight:600}
+.photo{border:1px dashed #98a8a1;border-radius:10px;background:#fff;padding:8px;font-size:13px}
+.blur{height:54px;border-radius:6px;background:repeating-linear-gradient(90deg,#d9d4c4 0 14px,#cfc9b6 14px 28px);display:flex;align-items:center;justify-content:center;filter:blur(.6px);font-weight:700;color:#4a4636;letter-spacing:1px}
+.zones{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}
+.z{border-radius:8px;padding:6px 8px;font-size:12.5px}
+.z b{display:block;font-size:12px}
+.z.ok{background:var(--tealb);color:#0b4a40}.z.no{background:var(--ambb);color:var(--amb)}
+.tag{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--ambb);color:var(--amb);margin-top:6px}
+.box{border-radius:10px;padding:9px 11px;margin-top:8px;font-size:14px}
+.box.done{background:var(--blueb)}.box.risk{background:var(--redb);color:#6e1812}.box.fail{background:var(--ambb)}
+.box.red{background:var(--red);color:#fff}
+.btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.btn{border:0;border-radius:9px;padding:8px 12px;font:inherit;font-size:14px;cursor:pointer;background:#dfe7e3}
+.btn.pri{background:var(--teal);color:#fff}.btn.out{background:#fff;border:1.5px solid var(--ink)}
+.btn.big{background:#fff;color:var(--red);font-weight:700;font-size:16px;padding:10px 16px}
+.n{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#c2410c;color:#fff;font-size:11.5px;font-weight:700;margin-right:4px;flex:none;vertical-align:1px}
+.hide-n .n{display:none}
+.foot-note{font-size:11.5px;color:var(--mut);margin-top:6px}
+aside{display:flex;flex-direction:column;gap:14px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.panel h2{font-size:15.5px;margin:0 0 8px}
+.promise{border-left:4px solid var(--ink);padding:6px 10px;background:#f7faf8}
+table{border-collapse:collapse;width:100%;font-size:13px}
+td,th{border-bottom:1px solid var(--line);padding:6px;text-align:left;vertical-align:top}
+th{color:var(--mut);font-weight:600}
+.pill{display:inline-block;padding:1px 8px;border-radius:999px;font-size:12.5px;font-weight:600;white-space:nowrap}
+.p-auto{background:var(--tealb);color:#0b4a40}.p-ask{background:var(--ambb);color:var(--amb)}.p-no{background:var(--redb);color:var(--red)}
+tr.changed td{background:#fff8e6}
+.ann{list-style:none;padding:0;margin:0}.ann li{margin-bottom:6px;font-size:13.5px}
+.dec li{margin-bottom:6px;font-size:13.5px}
+.foot{font-size:12px;color:var(--mut);padding:0 24px 20px}
+</style></head>
+<body>
+<header>
+ <h1>Prototype T1 Y tế · Kênh Hỏi dược sĩ của Pharmacity: khách gửi ảnh thuốc</h1>
+ <div class="sub">Lát cắt B (ảnh bao bì và đơn thuốc). Cùng một ca, cùng một model; chỉ đổi <b>mức tự chủ của tool <code>goi_y_san_pham</code></b>. Dữ liệu dựng, không gọi AI thật.</div>
+ <div class="ctl">
+  <div class="grp" id="gscreen"><span>Ca:</span>
+   <button data-s="1" class="on">Màn 1 · #1 ảnh mờ, mẹ 70 tuổi</button>
+   <button data-s="2">Màn 2 · #4 ảnh thuốc + đau ngực</button></div>
+  <div class="grp" id="glevel"><span>Mức của gợi ý sản phẩm:</span>
+   <button data-l="1">① Tự làm</button>
+   <button data-l="2" class="on">② Dược sĩ duyệt</button>
+   <button data-l="3">③ Cấm</button></div>
+  <div class="grp"><label><input type="checkbox" id="fail"> Giả lập chuyển dược sĩ thất bại</label></div>
+  <div class="grp"><label><input type="checkbox" id="ann" checked> Hiện số chú thích</label></div>
+ </div>
+</header>
+<main>
+ <section class="phone"><div class="bar"><span>Zalo OA · Pharmacity</span><span>23:41</span></div><div class="chat" id="chat"></div></section>
+ <aside>
+  <div class="panel"><h2>Lời hứa với khách ở mức này</h2><div class="promise" id="promise"></div></div>
+  <div class="panel"><h2>Mức tự chủ của các tool (dòng vàng là tool đang đổi)</h2>
+   <table><tr><th>Tool</th><th>Mức</th><th>Vì sao (cái giá khi sai)</th></tr><tbody id="tools"></tbody></table></div>
+  <div class="panel"><h2>Chú thích: mỗi số = thể hiện gì · nguyên tắc · mức tự chủ</h2><ul class="ann" id="ann-list"></ul></div>
+  <div class="panel"><h2>Quyết định thiết kế</h2><ul class="dec">
+   <li><b>Cách hiện độ chắc và bằng chứng:</b> thẻ ảnh hai vùng "Đọc được / Không đọc được" cùng nhãn "Chưa xác nhận tên thuốc". Đã nghĩ tới: (a) phần trăm độ tin cậy, loại vì người nhắn lúc nửa đêm không biết 80% là an toàn hay không và con số tạo cảm giác chắc giả; (b) chỉ ghi chú nhỏ cuối tin, loại vì khách đọc dòng đầu rồi làm. Hai vùng cho khách tự kiểm đúng chỗ AI dựa vào.</li>
+   <li><b>Cách điều khiển mức tự chủ:</b> công tắc ba mức ở đầu trang cho giảng viên so sánh, trong sản phẩm thật mức do chuỗi đặt, khách không chỉnh. Đã nghĩ tới nút "AI tự quyết / hỏi tôi" cho khách, loại vì người dùng thuốc thường không phải người nhắn và khách không đủ căn cứ để chọn mức an toàn.</li>
+   <li><b>Trạng thái "Đã chuyển dược sĩ"</b> lấy từ hệ thống, không do AI tự viết (bật ô giả lập thất bại để thấy).</li></ul></div>
+ </aside>
+</main>
+<div class="foot">Prototype T1 · dữ liệu dựng, không có dữ liệu sức khoẻ thật. Hotline và thời gian chờ là giả định, nhóm tự chốt.</div>
+<script>
+const $=s=>document.querySelector(s);let L=2,S=1,logged='start';
+const me=x=>`<div class="me">${x}</div>`;
+const ai=x=>`<div class="ai"><div class="who"><span class="n">1</span>Trợ lý AI của Pharmacity</div>${x}</div>`;
+const photoMo='<div class="photo"><div class="blur">...cillin 500</div></div>';
+function chuyen(){return $('#fail').checked
+ ?`<div class="box fail"><span class="n">4</span><b>Chưa chuyển được cho dược sĩ.</b> Bạn gọi hotline <b>1900 xxxx</b> (số giả định) để được hỗ trợ.</div>`
+ :`<div class="box done"><span class="n">4</span><b>Đã chuyển dược sĩ</b> kèm ảnh và thông tin "mẹ, 70 tuổi".<div class="foot-note">Trạng thái do hệ thống trả về. Nếu 10 phút chưa có dược sĩ nhận, nút gọi hotline sẽ hiện.</div></div>`}
+function s1(){
+ let h=me(photoMo.replace('class="photo"','class="photo" style="background:#fff"')+'Mẹ mình 70 tuổi, thuốc này uống sao em?');
+ if(L==1){
+  h+=ai(`Đây là <b>Amoxicillin 500mg</b>, kháng sinh thường dùng cho nhiễm khuẩn.
+  <div class="btns"><button class="btn pri">Đặt mua ngay</button></div>
+  <div class="box risk"><b>Rủi ro của mức này:</b> ảnh chỉ đọc được "...cillin 500" nhưng AI đoán tên đầy đủ, gửi nút đặt. Mẹ 70 tuổi uống nhầm thì không đảo được. Không có chỗ nào cho khách thấy AI đoán.</div>`);
+ }else{
+  h+=ai(`<span class="n">3</span>Trong ảnh, mình chỉ đọc được "...cillin 500", chưa đủ để biết chính xác đây là thuốc gì, nên mình chưa hướng dẫn cách dùng. Vì người uống là mẹ bạn (70 tuổi), mình chuyển cuộc chat và ảnh này cho dược sĩ.
+  <div class="photo" style="margin-top:8px"><span class="n">2</span><b>Mình đọc ảnh thế này</b>
+   <div class="zones"><div class="z ok"><b>Đọc được</b>"...cillin 500"</div><div class="z no"><b>Không đọc được</b>tên thuốc, hạn dùng</div></div></div>
+  <span class="tag">Chưa xác nhận tên thuốc</span>
+  ${chuyen()}
+  <div class="btns"><span class="n">5</span><button class="btn out">Chụp lại</button><button class="btn">Nhập tên thuốc</button><button class="btn">Phần đọc được không đúng</button></div>
+  ${L==3?'<div class="box fail" style="font-size:13px">Ở mức ③, AI không gửi nút đặt cho bất kỳ sản phẩm nào, kể cả nước muối sinh lý. Khách ca đơn giản cũng phải sang dược sĩ.</div>':'<div class="foot-note">Nếu mẹ chưa uống, chờ dược sĩ xác nhận. Nếu đã uống và nổi mẩn, sưng môi, khó thở, đi khám ngay.</div>'}
+  <div class="foot-note"><span class="n">1</span>Chỉ đọc chữ trên ảnh, không thay dược sĩ.</div>`);
+ }
+ return h;
+}
+function s2(){
+ return me('[ảnh hộp thuốc giảm đau] Ba mình uống cái này từ chiều mà vẫn đau ngực trái, hơi khó thở.')
+ +ai(`<div class="box red"><span class="n" style="background:#fff;color:var(--red)">6</span><b>Đau ngực trái kèm khó thở có thể nguy hiểm.</b><br>Gọi cấp cứu 115 ngay hoặc đưa ba đến cơ sở y tế gần nhất, đừng chờ thuốc. Mình không gợi ý thuốc cho tình huống này.
+  <div class="btns"><button class="btn big">Gọi 115</button><button class="btn big">Cơ sở y tế gần nhất</button></div></div>
+  ${$('#fail').checked?'<div class="box fail"><span class="n">4</span><b>Chưa báo được dược sĩ.</b> Việc cấp cứu không phụ thuộc bước này, bạn gọi 115 trước.</div>':'<div class="box done"><span class="n">4</span>Đã báo dược sĩ, ca gắn cờ <b>khẩn cấp</b> lên đầu hàng chờ. Dược sĩ thấy: tin gốc, ảnh, giờ hiện thẻ đỏ, "AI chưa gợi ý thuốc".</div>'}
+  <div class="foot-note">Không có nút đặt hàng, ảnh thuốc không được phân tích tiếp. ${L==1?'Dù ở mức ① hay ③, việc kiểm tra dấu hiệu nguy hiểm chạy trước nên kết quả giống nhau.':'Mức của gợi ý sản phẩm không ảnh hưởng ca này.'} Trợ lý AI không thay thế cấp cứu.</div>`);
+}
+const P={1:'"AI chọn thuốc cho bạn." Nhanh, nhưng AI cam kết đã nhận đúng thuốc từ ảnh, điều nó không làm được. Quá tay ở ca này.',
+2:'"AI đọc cho bạn xem trên ảnh có gì, dược sĩ xác nhận, bạn quyết định mua." Khách chờ một lượt; đổi lại không ai phải tin một tên thuốc do AI đoán. <b>Mức nhóm chọn.</b>',
+3:'"AI không gợi ý hay bán qua chat." An toàn nhất, nhưng mất giá trị chính của kênh: nước muối sinh lý cũng phải qua dược sĩ.'};
+function render(){
+ $('#chat').innerHTML=S==1?s1():s2();
+ $('#promise').innerHTML=P[L];
+ const lv={1:['Tự làm','p-auto','Gửi nút đặt cho thuốc đọc nhầm là không đảo được (#1, #3).'],2:['Dược sĩ duyệt','p-ask','Chờ được giảm nhờ AI soạn sẵn tóm tắt; ngoại lệ: danh sách sản phẩm an toàn do dược sĩ chuỗi lập (ví dụ nước muối) cho người dùng nhóm bình thường.'],3:['Cấm','p-no','Chặn mọi sai, nhưng ca đơn giản (#8) cũng phải chờ người.']}[L];
+ const T=[['doc_anh_bao_bi (mới)','Tự làm','p-auto','Chỉ đọc chữ, khách tự kiểm ở thẻ hai vùng.',0],
+ ['khuyen_di_kham','Tự làm','p-auto','Chờ duyệt là kiểu sai đắt nhất (#4); hiện thừa chỉ tốn vài phút.',0],
+ ['chuyen_duoc_si','Tự làm','p-auto','Đảo được, tốn vài phút. Bắt buộc với trẻ nhỏ, người già, bà bầu.',0],
+ ['goi_y_san_pham',lv[0],lv[1],lv[2],1],
+ ['luu_ghi_chu_suc_khoe','Khách xác nhận','p-ask','Chỉ ghi sau khi khách thấy bản nháp và bấm đồng ý (#7).',0],
+ ['ban_thuoc_ke_don','Cấm','p-no','Ngoài thẩm quyền, không đảo được.',0]];
+ $('#tools').innerHTML=T.map(r=>`<tr class="${r[4]?'changed':''}"><td><code>${r[0]}</code></td><td><span class="pill ${r[2]}">${r[1]}</span></td><td>${r[3]}</td></tr>`).join('');
+ const A=[['1','Nhãn "Trợ lý AI" và dòng "chỉ đọc chữ trên ảnh"','HAX G1/G2 (Điều 11 Luật AI)','Không có tool, là nhãn hiển thị','1,2,3,6'],
+ ['2','Thẻ ảnh "Đọc được / Không đọc được" + nhãn chưa xác nhận','PAIR Explainability + Trust, HAX G11','doc_anh_bao_bi: tự làm','2,3'],
+ ['3','Câu AI nói kèm giới hạn, không đoán tên thuốc','HAX G10','goi_y_san_pham bị khoá khi tên chưa đọc được','2,3'],
+ ['4','Trạng thái chuyển dược sĩ lấy từ hệ thống, có nhánh thất bại','PAIR Errors + Graceful Failure','chuyen_duoc_si: tự làm','2,3,6'],
+ ['5','Chụp lại / Nhập tên / Phần đọc được không đúng','HAX G9 (sửa dễ), G15','Tên khách nhập chỉ là "khách cho biết", không mở khoá gợi ý','2,3'],
+ ['6','Thẻ đỏ "Gọi 115", không nút đặt, không qua hàng chờ','PAIR Graceful Failure','khuyen_di_kham: tự làm','6']];
+ const scr=String(S);
+ $('#ann-list').innerHTML=A.filter(a=>(S==1?(L>1?['1','2','3','4','5']:['1']):['1','4','6']).includes(a[0])).map(a=>`<li><span class="n">${a[0]}</span><b>${a[1]}</b><br>${a[2]} · ${a[3]}</li>`).join('')+(S==1&&L==1?'<li style="color:#5d6b66">Ở mức ① mất ②③④⑤: AI đoán tên thuốc, khách không thấy phần không đọc được. Đó là chỗ mức này quá tay.</li>':'');
+}
+document.querySelectorAll('#gscreen button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#gscreen button').forEach(x=>x.classList.remove('on'));b.classList.add('on');S=+b.dataset.s;render()});
+document.querySelectorAll('#glevel button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#glevel button').forEach(x=>x.classList.remove('on'));b.classList.add('on');L=+b.dataset.l;render()});
+$('#fail').onchange=render;
+$('#ann').onchange=e=>document.body.classList.toggle('hide-n',!e.target.checked);
+render();
+</script></body></html>
